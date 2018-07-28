@@ -1,6 +1,7 @@
-# openni2-camera-lcm
+# openni2-camera-lcm (realsense2 version)
 
 Openni2 Camera LCM driver
+Update to support Realsense2.(under construction)
 
 ::
 
@@ -24,6 +25,10 @@ but is not dependent on libbot
 Apt install:
 
 - libopenni2-dev
+- librealsense2-utils
+- librealsense2-dkms
+- librealsense2-dev
+- librealsense2-dbg
 
 Install from source:
 

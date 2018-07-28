@@ -46,7 +46,7 @@ namespace openni2_wrapper
 
 class OpenNI2TimerFilter;
 
-class OpenNI2FrameListener : public openni::VideoStream::NewFrameListener
+class OpenNI2FrameListener : public openni::VideoStream::NewFrameListener //TODO: Rewrite this class
 {
 public:
   OpenNI2FrameListener();
@@ -54,7 +54,7 @@ public:
   virtual ~OpenNI2FrameListener()
   { };
 
-  void onNewFrame(openni::VideoStream& stream);
+  void onNewFrame(openni::VideoStream& stream); //TODO: rs2::pipe ??
 
   void setCallback(FrameCallbackFunction& callback)
   {
