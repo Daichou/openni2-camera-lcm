@@ -34,7 +34,8 @@
 
 #include <deque>
 
-#include "OpenNI.h"
+//#include "OpenNI.h"
+#include "librealsense2/rs.hpp"
 
 namespace openni2_wrapper
 {

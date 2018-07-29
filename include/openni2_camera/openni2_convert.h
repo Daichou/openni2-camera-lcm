@@ -36,19 +36,19 @@
 #include "openni2_camera/openni2_device_info.h"
 #include "openni2_camera/openni2_video_mode.h"
 
-#include "OpenNI.h"
-
+//#include "OpenNI.h"
+#include "librealsense2/rs.hpp"
 #include <vector>
 
 namespace openni2_wrapper
 {
 
-const OpenNI2DeviceInfo openni2_convert(const openni::DeviceInfo* pInfo); //TODO: rs2::device
+const OpenNI2DeviceInfo openni2_convert(const rs2::device* pInfo); //TODO: rs2::device
 
-const OpenNI2VideoMode openni2_convert(const openni::VideoMode& input); //TODO: rs2::device
+const OpenNI2VideoMode openni2_convert(const rs2::device& input); //TODO: rs2::device
 const openni::VideoMode openni2_convert(const OpenNI2VideoMode& input); 
 
-const std::vector<OpenNI2VideoMode> openni2_convert(const openni::Array<openni::VideoMode>& input);
+const std::vector<OpenNI2VideoMode> openni2_convert(const vector<rs2::device>& input);
 }
 
 #endif

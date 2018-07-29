@@ -39,7 +39,9 @@
 
 #include <vector>
 
-#include "OpenNI.h"
+//#include "OpenNI.h"
+
+#include "librealsense2/rs.hpp"
 
 namespace openni2_wrapper
 {
@@ -64,6 +66,8 @@ public:
   void setUseDeviceTimer(bool enable);
 
 private:
+    //static void ONI_CALLBACK_TYPE callback(OniStreamHandle streamHandle, void* pCookie)
+    //OniCallbackHandle m_callbackHandle;
   openni::VideoFrameRef m_frame;
 
   FrameCallbackFunction callback_;
