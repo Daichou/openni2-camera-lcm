@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}")
 # pull in the pods macros. See cmake/pods.cmake for documentation
 set(POD_NAME openni2)
 include(cmake/pods.cmake)
@@ -16,6 +17,8 @@ project(openni2)
 find_package(Boost REQUIRED COMPONENTS system thread)
 
 find_package(PkgConfig)
+
+find_package(RealSense2 REQUIRED)
 
 option(INSTALL_BOT_SPY "Install a bot-spy script to launch lcm-spy with this project's lcmtypes." ON)
 
@@ -34,6 +37,7 @@ endif()
 include_directories(include 
                     ${Boost_INCLUDE_DIRS}
                     ${PC_OPENNI2_INCLUDE_DIRS}
+                    ${REALSENSE2_INCLUDE_DIR}
                     )
 
 link_directories(${PC_OPENNI2_LIBRARY_DIRS})
@@ -50,22 +54,22 @@ add_library(openni2_wrapper
    src/openni2_video_mode.cpp
    src/jpeg-utils-ijg.c
 )
-target_link_libraries(openni2_wrapper  ${PC_OPENNI2_LIBRARIES} ${Boost_LIBRARIES} jpeg)
+target_link_libraries(openni2_wrapper  ${PC_OPENNI2_LIBRARIES} ${Boost_LIBRARIES} ${REALSENSE2_LIBRARY} jpeg)
 pods_install_libraries(openni2_wrapper)
 
 add_executable(test-wrapper test/test_wrapper.cpp )
-target_link_libraries(test-wrapper openni2_wrapper ${Boost_LIBRARIES})
+target_link_libraries(test-wrapper openni2_wrapper ${Boost_LIBRARIES} ${REALSENSE2_LIBRARY})
 
 ############### Wrapper Library #################
 add_library(openni2_driver_lib src/openni2_driver.cpp)
 pods_install_libraries(openni2_wrapper)
-target_link_libraries(openni2_driver_lib openni2_wrapper  ${Boost_LIBRARIES} jpeg z)
+target_link_libraries(openni2_driver_lib openni2_wrapper  ${Boost_LIBRARIES} ${REALSENSE2_LIBRARY} jpeg z)
 pods_install_libraries(openni2_driver_lib)
 #add_dependencies(openni2_driver_lib ${PROJECT_NAME}_gencfg)
 
 ############### Main Driver #################
 add_executable(openni2-camera-lcm   ros/openni2_camera_node.cpp)
-target_link_libraries(openni2-camera-lcm openni2_driver_lib ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
+target_link_libraries(openni2-camera-lcm openni2_driver_lib ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${REALSENSE2_LIBRARY})
 add_dependencies(openni2-camera-lcm ${PROJECT_NAME}_gencfg ${PROJECT_NAME}_generate_messages_cpp)
 find_package(lcm QUIET)
 if(lcm_FOUND)
